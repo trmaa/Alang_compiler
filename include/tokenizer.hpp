@@ -1,5 +1,5 @@
-#ifndef TOKEN_HPP
-#define TOKEN_HPP
+#ifndef TOKENIZER_HPP 
+#define TOKENIZER_HPP
 
 #include <optional>
 #include <string>
@@ -21,7 +21,7 @@ std::string tokens_to_assembly(const std::vector<token_t>& tokens);
 class tokenizer_t {
 private:
 	const std::string& m_src;
-	int m_index = 0;
+	size_t m_index = 0;
 
 private:
 	char m_peak(int ahead = 1) const {

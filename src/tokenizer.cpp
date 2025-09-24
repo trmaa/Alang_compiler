@@ -1,5 +1,5 @@
 #include <sstream>
-#include "token.hpp"
+#include "tokenizer.hpp"
 
 tokenizer_t::tokenizer_t(const std::string& src)
 : m_src(src) {}
@@ -19,9 +19,6 @@ std::vector<token_t> tokenizer_t::tokenize() {
 			}
 
 			if (buffer == "exit") {
-				std::printf("\033[1;32m%s\n", buffer.c_str());
-				std::printf("\033[31;0m");
-
 				tokens.push_back({.type=token_e::_exit});
 				buffer.clear();
 
@@ -34,9 +31,6 @@ std::vector<token_t> tokenizer_t::tokenize() {
 				buffer.push_back(this->m_consume());
 			}
 
-			std::printf("\033[1;32m%s\n", buffer.c_str());
-			std::printf("\033[31;0m");
-
 			tokens.push_back({.type=token_e::_int, .value=buffer});
 			buffer.clear();
 
@@ -45,9 +39,6 @@ std::vector<token_t> tokenizer_t::tokenize() {
 
 		if (this->m_peak() == ';') {
 			this->m_consume();
-
-			std::printf("\033[1;32m;\n");
-			std::printf("\033[31;0m");
 
 			tokens.push_back({.type=token_e::_endl});	
 			continue;
@@ -59,12 +50,13 @@ std::vector<token_t> tokenizer_t::tokenize() {
 			continue;
 		}
 
-		std::printf("\033[1;31m[compiler] Error: ");
+		std::printf("\033[1;31m[tokenizer] Error: ");
 		std::printf("\033[1;33m%s\033[1;31m is not a token.\n", buffer.c_str());
 		std::printf("- Char: %d.\n", this->m_index);
 		std::printf("\033[31;0m");
-		break;
+		std::exit(-1);
 	}
+	this->m_index = 0;
 
 	return tokens;
 }
@@ -89,7 +81,7 @@ std::string tokens_to_assembly(const std::vector<token_t>& tokens) {
 				std::printf("\033[1;31m[compiler] Error: ");
 				std::printf("\033[1;33mreturn\033[1;31m needs a value.\n");
 				std::printf("\033[31;0m");
-				break;
+				std::exit(-1);
 			}
 
 			output << "	movq $60, %rax\n";
