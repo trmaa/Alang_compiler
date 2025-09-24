@@ -13,13 +13,24 @@ int main(int argc, char** argv) {
 
 	std::string input_string;
 	{
-		std::stringstream input_file;
-		std::fstream input(*(argv+1));//, std::ios::in);
-		input_file << input.rdbuf();
-		input_string = input_file.str();
+		std::stringstream input;
+		std::fstream input_file(*(argv+1));//, std::ios::in);
+		input << input_file.rdbuf();
+		input_string = input.str();
 	}
 
-	std::vector<token_t> tokens = tokenize(input_string);
+	tokenizer_t tokenizer(input_string);
+	std::vector<token_t> tokens = tokenizer.tokenize();
+
+	std::string out = tokens_to_assembly(tokens);
+	std::printf("%s", out.c_str());
+	{
+		std::fstream output_file("alang/main.s");
+		output_file << out;
+	}
+
+	std::printf("LINKING\n");
+	std::system("gcc alang/main.s -o program -nostdlib");
 
 	std::exit(0);
 }
