@@ -1,0 +1,3 @@
+# Alang
+
+Which is suposed to be the best language ever created...

@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
 	}
 
 	std::printf("LINKING\n");
-	std::system("gcc alang/main.s -o program -nostdlib");
+	std::system("gcc alang/main.s -o alang.app -nostdlib");
 
 	std::exit(0);
 }
