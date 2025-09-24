@@ -37,9 +37,11 @@ int main(int argc, char** argv) {
 	generator_t generator(tree.value());
 	{
 		std::fstream output_file("alang/main.s");
+		output_file << "";
 		output_file << generator.generate();
 	}
 
+	std::printf("ASSEMBLING\n");
 	std::printf("LINKING\n");
 	std::system("gcc alang/main.s -o alang.app -nostdlib");
 
