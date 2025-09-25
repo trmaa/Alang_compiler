@@ -8,7 +8,9 @@
 enum token_e {
 	_exit,
 	_int,
-	_endl
+	_endl,
+	_o_par,
+	_c_par
 };
 
 typedef struct token_t {
@@ -24,11 +26,11 @@ private:
 	size_t m_index = 0;
 
 private:
-	char m_peak(int ahead = 1) const {
+	std::optional<char> m_peek(int ahead = 0) const {
 		if (this->m_index + ahead >= this->m_src.size()) {
-			return '\0';
+			return {};
 		}	
-		return this->m_src.at(this->m_index);
+		return this->m_src.at(this->m_index + ahead);
 	}
 
 	char m_consume() {

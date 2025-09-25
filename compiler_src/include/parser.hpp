@@ -20,11 +20,11 @@ private:
 	size_t m_index = 0;
 
 private:
-	std::optional<token_t> m_peak(int ahead = 1) const {
+	std::optional<token_t> m_peek(int ahead = 0) const {
 		if (this->m_index + ahead >= this->m_tokens.size()) {
 			return {};
 		}	
-		return this->m_tokens.at(this->m_index);
+		return this->m_tokens.at(this->m_index + ahead);
 	}
 
 	token_t m_consume() {

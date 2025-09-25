@@ -14,6 +14,8 @@ int main(int argc, char** argv) {
 		std::exit(-1);
 	}
 
+	std::printf("\033[1;31m Compiling: \033[31;0m%s\n", *(argv+1));
+
 	std::string input_string;
 	{
 		std::stringstream input;
@@ -43,7 +45,8 @@ int main(int argc, char** argv) {
 
 	std::printf("ASSEMBLING\n");
 	std::printf("LINKING\n");
-	std::system("gcc alang/main.s -o alang.app -nostdlib");
+	std::printf("\033[1;32m[assembler]<debug>\033[1;33mgcc alang/main.s -o alang.app -nostdlib\033[31;0m\n");
+	std::system("gcc compiler_build/alang_app/main.s -o alang.app -nostdlib");
 
 	std::exit(0);
 }

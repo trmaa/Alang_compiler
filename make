@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./scripts/make/main.sh $@
+./compiler_src/scripts/make/main.sh $@
